@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
+import Button from "@mui/material/Button";
 </script>
 
 <script>
@@ -47,7 +48,9 @@ async function kantoPokemon() {
   <div>
     <ul>
       <li v-for="(pokemon, index) in pokemonList" :key="`poke-${index}`">
-        {{ pokemon }}
+        {{ pokemon.entry_number }}
+        {{ pokemon.pokemon_species.name }}
+        {{ pokemon.pokemon_species.url }}
       </li>
     </ul>
   </div>

@@ -1,39 +1,3 @@
-<script setup>
-import { onMounted, ref } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
-import Button from "@mui/material/Button";
-</script>
-
-<script>
-export default {
-  data: () => ({
-    pokemonList: [],
-  }),
-  async mounted() {
-    const pokeData = await fetch("https://pokeapi.co/api/v2/pokedex/2/").then(
-      (response) => response.json()
-    );
-
-    this.pokemonList = pokeData.pokemon_entries;
-  },
-};
-</script>
-<!-- <script>
-const pokemonList = ref([]);
-
-async function kantoPokemon() {
-  const response = await fetch("https://pokeapi.co/api/v2/pokedex/2/");
-  const pokeData = await response.json();
-  const pokemon = pokeData.pokemon_entries;
-
-  pokemonList = pokemon.map((pokemon) => ({
-    entryNumber: pokemon.entry_number,
-    pokeName: pokemon.pokemon_species.name,
-    url: pokemon.pokemon_species.url,
-  }));
-}
-</script> -->
-
 <template>
   <div>
     <a target="_blank">
@@ -44,17 +8,40 @@ async function kantoPokemon() {
   <div>
     <button @click="logKantoPokemon">consoleLogKantoPokemon</button>
   </div>
-
+  <p>Find Pokemon: {{ filterText }}</p>
+  <input type="text" v-model="filterText" />
   <div>
     <ul>
-      <li v-for="(pokemon, index) in pokemonList" :key="`poke-${index}`">
-        {{ pokemon.entry_number }}
-        {{ pokemon.pokemon_species.name }}
+      <li
+        v-for="(pokemon, index) in filteredPokemonList"
+        :key="`poke-${index}`"
+      >
+        #{{ pokemon.entry_number }} - {{ pokemon.pokemon_species.name }} -
         {{ pokemon.pokemon_species.url }}
       </li>
     </ul>
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted, computed } from "vue";
+
+const pokemonList = ref([]);
+const filterText = ref("");
+const filteredPokemonList = computed(() => {
+  return pokemonList.value.filter((pokemon) => {
+    return pokemon.pokemon_species.name.includes(filterText.value);
+  });
+});
+
+onMounted(async () => {
+  const pokeData = await fetch("https://pokeapi.co/api/v2/pokedex/2/")
+    .then((response) => response.json())
+    .then((data) => {
+      pokemonList.value = data.pokemon_entries;
+    });
+});
+</script>
 
 <style scoped>
 .logo {

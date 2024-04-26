@@ -1,7 +1,7 @@
 <script setup>
-import { defineProps } from "vue";
+import { computed, defineProps } from "vue";
 
-defineProps({
+const props = defineProps({
   name: {
     type: String,
     required: true,
@@ -11,10 +11,16 @@ defineProps({
     required: true,
   },
 });
+
+const displayName = computed(() => {
+  return props.name[0].toUpperCase() + props.name.substring(1);
+});
+
+console.log(props.name);
 </script>
 
 <template>
-  <li>{{ number }} - {{ name }}</li>
+  <li>{{ number }} - {{ displayName }}</li>
 </template>
 
 <style></style>

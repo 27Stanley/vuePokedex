@@ -7,16 +7,13 @@
   <p>Find Pokemon: {{ filterText }}</p>
   <input type="text" v-model="filterText" />
   <div>
-    <ul>
+    <ul style="list-style-type: none">
       <PokedexCard
         v-for="(pokemon, index) in storedPokemon.filteredListOfPokemon"
         :key="`poke-${index}`"
         :number="pokemon.entry_number"
         :name="pokemon.pokemon_species.name"
       />
-      <!-- #{{ pokemon.entry_number }} - {{ pokemon.pokemon_species.name }} -
-        {{ pokemon.pokemon_species.url }} -->
-      <!-- </PokedexCard> -->
     </ul>
   </div>
 </template>
@@ -43,6 +40,15 @@ onMounted(async () => {
   );
 
   storedPokemon.list = pokeData.pokemon_entries;
+
+  // const fetchThePokedex = await fetch("/.netlify/functions/fetchPokedex").then(
+  //   (response) => {
+  //     console.log("here", response);
+  //     console.log(response.json());
+  //   }
+  // );
+
+  // storedPokemon.list = fetchPokedex.pokemon_entries;
 });
 </script>
 

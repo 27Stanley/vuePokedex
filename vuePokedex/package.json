@@ -12,6 +12,9 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.15",
+    "@netlify/functions": "^2.6.0",
+    "axios": "^1.6.8",
+    "node-fetch": "^3.3.2",
     "vue": "^3.4.21"
   },
   "devDependencies": {

@@ -4,6 +4,7 @@
       <img src="./assets/pokemonLogo.svg" class="logo" alt="PokeLogo" />
     </a>
   </div>
+  <PokemonSprite />
   <p>Find Pokemon: {{ filterText }}</p>
   <input type="text" v-model="filterText" />
   <div>
@@ -21,6 +22,8 @@
 <script setup>
 import { ref, onMounted, computed, reactive } from "vue";
 import PokedexCard from "./components/PokedexCard.vue";
+
+import PokemonSprite from "./components/PokemonSprite.vue";
 
 const pokemonList = ref([]);
 const filterText = ref("");

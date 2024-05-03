@@ -33,8 +33,47 @@ const handleClick = async () => {
 </script>
 
 <template>
-  <li>Pokedex entry no. #{{ number }}:</li>
-  <button @click="handleClick">{{ displayName }}</button>
+  <li class="pokeListItem">
+    Pokedex entry no. #{{ number }}:
+    <button class="pokeButton" @click="handleClick">{{ displayName }}</button>
+  </li>
 </template>
 
-<style></style>
+<style>
+.pokeListItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.pokeButton {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition:
+    border-color 0.25s,
+    filter 0.25s;
+  margin-left: 20px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .pokeButton {
+    width: 150px;
+  }
+}
+
+.pokeButton:hover {
+  filter: drop-shadow(0 0 2em #fdd54faa);
+}
+
+.pokeButton:focus,
+.pokeButton:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+</style>

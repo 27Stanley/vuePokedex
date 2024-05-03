@@ -1,21 +1,33 @@
 <template>
-  <div>
-    <a target="_blank">
-      <img src="./assets/pokemonLogo.svg" class="logo" alt="PokeLogo" />
-    </a>
-  </div>
-  <PokemonSprite />
-  <p>Find Pokemon: {{ filterText }}</p>
-  <input type="text" v-model="filterText" />
-  <div>
-    <ul style="list-style-type: none">
-      <PokedexCard
-        v-for="(pokemon, index) in storedPokemon.filteredListOfPokemon"
-        :key="`poke-${index}`"
-        :number="pokemon.entry_number"
-        :name="pokemon.pokemon_species.name"
-      />
-    </ul>
+  <div class="container">
+    <div class="logoContainer">
+      <a target="_blank">
+        <img src="./assets/pokemonLogo.svg" class="logo" alt="PokeLogo" />
+      </a>
+    </div>
+
+    <div class="sideBar">
+      <div class="searchPokemon">
+        <h2>Find Pokemon: {{ filterText }}</h2>
+        <input type="text" v-model="filterText" style="width: 100%" />
+      </div>
+
+      <div class="pokedexList">
+        <ul style="list-style-type: none">
+          <PokedexCard
+            v-for="(pokemon, index) in storedPokemon.filteredListOfPokemon"
+            :key="`poke-${index}`"
+            :number="pokemon.entry_number"
+            :name="pokemon.pokemon_species.name"
+          />
+        </ul>
+      </div>
+    </div>
+
+    <div class="displaySelectedPokemon">
+      <p>Poke Main Display</p>
+      <PokemonCardMain />
+    </div>
   </div>
 </template>
 
@@ -23,9 +35,9 @@
 import { ref, onMounted, computed, reactive } from "vue";
 import PokedexCard from "./components/PokedexCard.vue";
 
-import PokemonSprite from "./components/PokemonSprite.vue";
+import PokemonCardMain from "./components/PokemonCardMain.vue";
 
-const pokemonList = ref([]);
+// const pokemonList = ref([]);
 const filterText = ref("");
 
 const storedPokemon = reactive({
@@ -55,7 +67,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style>
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -63,7 +75,49 @@ onMounted(async () => {
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 3.2fr 0.6fr;
+  gap: 10px;
+  width: 90%;
+}
+
+.logoContainer {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.sideBar {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  background-color: #464646;
+  border-radius: 10px;
+  padding: 20px;
+  height: 100vh;
+  margin: 0;
+}
+
+.searchPokemon {
+  padding-bottom: 20px;
+  /* display: flex;
+  justify-content: flex; */
+}
+
+.displaySelectedPokemon {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.pokedexList ul {
+  margin: 0;
+  padding: 10px;
+  height: 90vh;
+}
+
+.pokedexList {
+  overflow-y: auto;
+  border: 1px solid#b3b3b3;
+  border-radius: 5px;
 }
 </style>

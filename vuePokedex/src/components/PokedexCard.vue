@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, defineProps } from "vue";
+import { computed, ref, defineProps, defineEmits } from "vue";
 
 const props = defineProps({
   name: {
@@ -16,16 +16,21 @@ const displayName = computed(() => {
   return props.name[0].toUpperCase() + props.name.substring(1);
 });
 
+const emit = defineEmits();
+
 const handleClick = async () => {
   try {
     const pokeLookup = `https://pokeapi.co/api/v2/pokemon/${props.name}`;
     const response = await fetch(pokeLookup);
     const currentPokemonEntry = await response.json();
-    console.log(
-      currentPokemonEntry.stats,
-      currentPokemonEntry.types,
-      currentPokemonEntry.sprites.front_default
-    );
+    console.log(currentPokemonEntry);
+    emit("pokemon clicked", currentPokemonEntry);
+    console.log("clicka");
+    // console.log(
+    //   currentPokemonEntry.stats,
+    //   currentPokemonEntry.types,
+    //   currentPokemonEntry.sprites.front_default
+    // );
   } catch (err) {
     console.log("error", err);
   }

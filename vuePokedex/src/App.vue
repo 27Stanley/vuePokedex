@@ -6,6 +6,10 @@
       </a>
     </div>
 
+    <div class="PokedexRegion">
+      <PokedexRegion />
+    </div>
+
     <div class="sideBar">
       <div class="searchPokemon">
         <h2>Find Pokemon: {{ filterText }}</h2>
@@ -34,11 +38,12 @@
 <script setup>
 import { ref, onMounted, computed, reactive } from "vue";
 import PokedexCard from "./components/PokedexCard.vue";
-
+import PokedexRegion from "./components/PokedexRegion.vue";
 import PokemonCardMain from "./components/PokemonCardMain.vue";
 
 // const pokemonList = ref([]);
 const filterText = ref("");
+const pokedexRegion = 2;
 
 const storedPokemon = reactive({
   list: [],
@@ -50,9 +55,9 @@ const storedPokemon = reactive({
 });
 
 onMounted(async () => {
-  const pokeData = await fetch("https://pokeapi.co/api/v2/pokedex/2/").then(
-    (response) => response.json()
-  );
+  const pokeData = await fetch(
+    `https://pokeapi.co/api/v2/pokedex/${pokedexRegion}/`
+  ).then((response) => response.json());
 
   storedPokemon.list = pokeData.pokemon_entries;
 
@@ -84,8 +89,9 @@ onMounted(async () => {
 }
 
 .logoContainer {
-  grid-column-start: 1;
-  grid-column-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row: 1;
 }
 
 .sideBar {
@@ -106,18 +112,24 @@ onMounted(async () => {
 
 .displaySelectedPokemon {
   grid-column-start: 2;
-  grid-column-end: 3;
+  grid-column-end: 4;
 }
 
 .pokedexList ul {
   margin: 0;
   padding: 10px;
-  height: 90vh;
+  height: 84vh;
 }
 
 .pokedexList {
   overflow-y: auto;
   border: 1px solid#b3b3b3;
   border-radius: 5px;
+}
+
+.PokedexRegion {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row: 1;
 }
 </style>
